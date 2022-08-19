@@ -8,7 +8,7 @@ const delButton = document.querySelector('[data-delete]');
 let operand = undefined;
 screenResult.textContent = "0";
 showOperation.textContent = "0";
-let number ="";
+let number = "";
 
 numberSelection.forEach((button) => {
     button.addEventListener('click', () => populateScreen(button.textContent));
@@ -42,6 +42,9 @@ function power(a) {
 }
 
 function operation(a, b, operand) {
+
+    a = Number(a);
+    b = Number(b);
     switch (operand) {
         case "+":
             add(a, b);
@@ -65,8 +68,6 @@ function operation(a, b, operand) {
 }
 
 function clear() {
-    a = 0;
-    b = 0;
     operand = undefined;
     screenResult.textContent = "0";
     showOperation.textContent = "0";
@@ -76,34 +77,38 @@ function clear() {
 
 function populateScreen(number) {
 
-    if(screenResult.textContent === "0") {
+    if (screenResult.textContent === "0" && number !== ".") {
         screenResult.textContent = "";
-    }
-    
-    screenResult.textContent += number; 
-    addLowerCase();
-    
+    } 
 
+    screenResult.textContent += number;
+    addLowerCase();
+    checkNumberLength(screenResult);
 }
 
 function deleteNumber() {
     screenResult.textContent = screenResult.textContent.slice(0, -1);
-    if(screenResult.textContent === "") {
+    if (screenResult.textContent === "") {
         screenResult.textContent = "0";
     }
-   removeLowerCase()
+    removeLowerCase()
 }
 
 function removeLowerCase() {
-    if(screenResult.textContent.length <= 13){
+    if (screenResult.textContent.length <= 13) {
         screenResult.classList.remove("lower-case");
-
     }
 }
 
 function addLowerCase() {
-    if(screenResult.textContent.length > 13){
+    if (screenResult.textContent.length > 13) {
         screenResult.classList.add("lower-case");
+    }
+}
 
+function checkNumberLength(numberLength) {
+    if (numberLength.textContent.length > 15) {
+        alert("Cannot have more than 15 symbols");
+        screenResult.textContent = screenResult.textContent.slice(0, -1);
     }
 }
