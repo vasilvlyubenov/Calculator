@@ -18,13 +18,14 @@ numberSelection.forEach((button) => {
 })
 
 operands.forEach((oButton) => {
-    oButton.addEventListener('click', () => setOpetation(oButton.textContent));
+    oButton.addEventListener('click', () => setOperation(oButton.textContent));
 })
 
 clearButton.addEventListener('click', clear);
 delButton.addEventListener('click', deleteNumber);
 equalsButton.addEventListener('click', evaluate);
 decimalPoint.addEventListener('click', checkDecimal);
+window.addEventListener('keydown', keyboardInput);
 
 function add(a, b) {
     return a + b;
@@ -145,7 +146,7 @@ function checkDecimal() {
     screenResult.textContent += '.';
 }
 
-function setOpetation(sign) {
+function setOperation(sign) {
 
     if (operand !== null) {
         evaluate()
@@ -174,7 +175,6 @@ function evaluate() {
     if (operand === null) return;
 
     currentNumber = screenResult.textContent;
-    
 
     if (operand === "%") {
         showOperation.textContent = `${prevNumber} / 100 =`;
@@ -193,4 +193,28 @@ function evaluate() {
 
 function formatResult(number) {
     return Math.round(number * 1000) / 1000;
+}
+
+function keyboardInput(event) {
+
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+        setOperation(event.key);
+    } else if (event.key === '.') {
+        checkDecimal();
+    } else if (event.key === '=' || event.key === 'Enter' || event.key === 'Return') {
+        evaluate();
+    } else if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Del') {
+        deleteNumber();
+    } else if (event.key === 'Escape' || event.key === 'Esc') {
+        clear();
+    } else if (event.key >= 0 && event.key <= 9) {
+        populateScreen(event.key);
+    } else if(event.key === "%" || event.key === "^") {
+        if(event.key === "^") {
+            setOperation('x²');
+        } else {
+            setOperation(event.key);
+        }
+        
+    }
 }
