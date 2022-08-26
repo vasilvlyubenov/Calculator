@@ -123,13 +123,13 @@ function deleteNumber() {
 }
 
 function removeLowerCase() {
-    if (screenResult.textContent.length <= 13) {
+    if (screenResult.textContent.length <= 10) {
         screenResult.classList.remove("lower-case");
     }
 }
 
 function addLowerCase() {
-    if (screenResult.textContent.length > 13) {
+    if (screenResult.textContent.length > 10) {
         screenResult.classList.add("lower-case");
     }
 }
